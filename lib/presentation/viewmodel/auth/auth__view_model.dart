@@ -54,7 +54,7 @@ class AuthViewModel extends GetxController {
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           this.verificationId = verificationId;
-          Message.showError('Error', 'Auto retrieval timeout');
+          // Message.showError('Error', 'Auto retrieval timeout');
           print('Auto retrieval timeout. Verification ID: $verificationId');
         },
       );
@@ -82,7 +82,8 @@ class AuthViewModel extends GetxController {
 
       if (isPhoneNumberRegistered) {
         await SharedPrefService.saveLoggedIn(true);
-        profileController.fetchUserData(phoneNumber);
+        await SharedPrefService.savePhoneNumber(phoneNumber);
+        profileController.firestoreService.getUserDataStream(phoneNumber);
         profileController.phonenumber = phoneNumber;
         Get.offAll(
           () => const BottomNavHome(),
@@ -124,8 +125,9 @@ class AuthViewModel extends GetxController {
       );
 
       await SharedPrefService.saveLoggedIn(true);
+      await SharedPrefService.savePhoneNumber(phoneNumber);
 
-      profileController.fetchUserData(phoneNumber);
+      profileController.firestoreService.getUserDataStream(phoneNumber);
       profileController.phonenumber = phoneNumber;
 
       Get.offAll(

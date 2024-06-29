@@ -1,4 +1,5 @@
 class AddCarDetails {
+  String? carId; // Optional carId field
   String carName;
   String carImage;
   String carCategory;
@@ -6,10 +7,11 @@ class AddCarDetails {
   String numberPlate;
   String alphabet;
   String city;
-  String transmissionType; // Added transmissionType field
-  String hasInsurance; // Added hasInsurance field
+  String transmissionType;
+  String hasInsurance;
 
   AddCarDetails({
+    this.carId,
     required this.carName,
     required this.carImage,
     required this.carCategory,
@@ -35,8 +37,9 @@ class AddCarDetails {
     };
   }
 
-  factory AddCarDetails.fromMap(Map<String, dynamic> map) {
+  factory AddCarDetails.fromMap(Map<String, dynamic> map, {String? id}) {
     return AddCarDetails(
+      carId: id,
       carName: map['carName'],
       carImage: map['carImage'],
       carCategory: map['carCategory'],

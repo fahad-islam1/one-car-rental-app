@@ -19,7 +19,6 @@ class OtpVerificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Verify OTP'),
@@ -45,10 +44,9 @@ class OtpVerificationScreen extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   authController.verifyOtp(phonenumber);
-      
                 },
                 child: Obx(
-                  () => BottmBtn(
+                  () => CommonButton(
                     isLoading: authController.isLoading.value,
                     title: 'Verify OTP',
                     width: 200,

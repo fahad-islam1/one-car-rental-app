@@ -1,7 +1,6 @@
 import 'package:one_car_rental_app/presentation/components/common/common_text.dart';
 import 'package:one_car_rental_app/res/colors/colors.dart';
 import 'package:one_car_rental_app/res/utils/privacypolicy.dart';
-import 'package:one_car_rental_app/res/utils/termcondtion.dart';
 import 'package:flutter/material.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {

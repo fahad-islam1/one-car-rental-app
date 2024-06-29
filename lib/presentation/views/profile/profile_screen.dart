@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:one_car_rental_app/data/services/firebase/firestore_service.dart';
 import 'package:one_car_rental_app/presentation/components/common/common_text.dart';
 import 'package:one_car_rental_app/presentation/viewmodel/profilemodel/profile_view_model.dart';
 import 'package:one_car_rental_app/presentation/views/profile/edit_screen.dart';

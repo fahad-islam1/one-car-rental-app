@@ -11,7 +11,7 @@ class YourCarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AddCarDetailsFireStore _addCarDetailsFirestore =
+    final AddCarDetailsFireStore addCarDetailsFirestore =
         AddCarDetailsFireStore();
     return Scaffold(
       bottomNavigationBar: InkWell(
@@ -46,8 +46,8 @@ class YourCarScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.displaySmall,
         ),
       ),
-      body: FutureBuilder<List<AddCarDetails>>(
-        future: _addCarDetailsFirestore.getUserCars(),
+      body: StreamBuilder<List<AddCarDetails>>(
+        stream: addCarDetailsFirestore.getUserCarsStream(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -86,6 +86,17 @@ class YourCarScreen extends StatelessWidget {
                 ),
                 leading: CircleAvatar(
                   backgroundImage: NetworkImage(car.carImage),
+                ),
+                trailing: IconButton(
+                  onPressed: () async {
+                    if (car.carId != null) {
+                      await addCarDetailsFirestore.deleteCar(car.carId!);
+                    }
+                  },
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
                 ),
               );
             },

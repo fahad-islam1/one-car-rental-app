@@ -8,7 +8,7 @@ class ContactUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottmBtn(
+      bottomNavigationBar: CommonButton(
         title: 'Conatact Us',
         width: 300,
       ),

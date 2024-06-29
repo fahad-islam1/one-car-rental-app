@@ -7,7 +7,7 @@ class GaragePickupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottmBtn( 
+      bottomNavigationBar: const CommonButton(
         title: 'Book Now',
         width: 300,
       ),

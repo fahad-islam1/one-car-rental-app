@@ -114,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              BottmBtn(
+              CommonButton(
                 title: 'Car For Rent',
                 width: 130,
               ),

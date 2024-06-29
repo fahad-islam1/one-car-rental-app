@@ -55,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                     );
                   },
                   child: Obx(
-                    () => BottmBtn(
+                    () => CommonButton(
                       isLoading: authController.isLoading.value,
                       title: 'Login',
                       width: 200.0,

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:one_car_rental_app/presentation/components/common/common_text.dart';
 import 'package:one_car_rental_app/res/colors/colors.dart';
 
-class BottmBtn extends StatelessWidget {
-  const BottmBtn({
+class CommonButton extends StatelessWidget {
+  const CommonButton({
     super.key,
     required this.title,
     required this.width,

@@ -6,7 +6,7 @@ import 'package:one_car_rental_app/presentation/viewmodel/profilemodel/profile_v
 import 'package:one_car_rental_app/res/colors/colors.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({Key? key, this.userData}) : super(key: key);
+  const EditProfileScreen({super.key, this.userData});
 
   final userData;
 
@@ -60,7 +60,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           );
         },
         child: Container(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           height: 45,
           width: double.infinity,
           decoration: BoxDecoration(
@@ -68,18 +68,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             borderRadius: BorderRadius.circular(5),
           ),
           alignment: Alignment.center,
-          child: CustomText(
-            text: 'Save',
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
+          child: profileViewModel.isLoading.value
+              ? const CircularProgressIndicator(
+                  color: Colors.white,
+                )
+              : const CustomText(
+                  text: 'Save',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
         ),
       ),
       appBar: AppBar(
-        title: CustomText(
+        title: const CustomText(
           text: 'Edit Profile',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -88,7 +92,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
+            const Align(
               alignment: Alignment.topCenter,
               child: Divider(
                 thickness: 10,
@@ -112,7 +116,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   profileViewModel.imageUrl.isNotEmpty
                                       ? NetworkImage(
                                           profileViewModel.imageUrl.value)
-                                      : AssetImage('assets/images/avatar.png')
+                                      : const AssetImage('assets/images/avatar.png')
                                           as ImageProvider,
                             ),
                           )),
@@ -127,7 +131,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           child: Container(
                             width: 30,
                             height: 30,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
                             ),
@@ -141,55 +145,55 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   CustomText(
                     text: 'First Name',
                     style: TextStyle(fontSize: 15, color: grey),
                   ),
                   TextField(
                     controller: _firstNameController,
-                    decoration: InputDecoration(),
+                    decoration: const InputDecoration(),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   CustomText(
                     text: 'Last Name',
                     style: TextStyle(fontSize: 15, color: grey),
                   ),
                   TextField(
                     controller: _lastNameController,
-                    decoration: InputDecoration(),
+                    decoration: const InputDecoration(),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   CustomText(
                     text: 'Email',
                     style: TextStyle(fontSize: 15, color: grey),
                   ),
                   TextField(
                     controller: _emailController,
-                    decoration: InputDecoration(),
+                    decoration: const InputDecoration(),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   CustomText(
                     text: 'Enter Your Number',
                     style: TextStyle(fontSize: 15, color: grey),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   IntlPhoneField(
                     controller: _phoneNumberController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Phone Number',
                     ),
                     initialCountryCode: '+91',
                     onChanged: (phone) {
-                      phoneNumber = phone.completeNumber ?? '';
+                      phoneNumber = phone.completeNumber;
                     },
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   CustomText(
                     text: 'Gender',
                     style: TextStyle(fontSize: 15, color: grey),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Obx(() => Row(
                         children: [
                           InkWell(
@@ -222,7 +226,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           InkWell(
                             onTap: () {
                               profileViewModel.gender.value = 'Female';

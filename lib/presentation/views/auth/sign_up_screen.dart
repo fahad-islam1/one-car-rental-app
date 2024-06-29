@@ -95,7 +95,7 @@ class SignUpScreen extends StatelessWidget {
                       print('error');
                     }
                   },
-                  child: BottmBtn(
+                  child: CommonButton(
                     title: 'Submit',
                     width: 200,
                   ),

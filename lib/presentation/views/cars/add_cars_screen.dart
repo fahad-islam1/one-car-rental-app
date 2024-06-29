@@ -374,7 +374,7 @@ class AddCarsScreen extends StatelessWidget {
 
                                   controller.uploadAssetImage();
                                 },
-                                child: BottmBtn(title: 'Next', width: 400),
+                                child: CommonButton(title: 'Next', width: 400),
                               );
                             } else {
                               return Container();
@@ -468,7 +468,7 @@ class AddCarsScreen extends StatelessWidget {
                                   onTap: () {
                                     controller.addCarToFirestore();
                                   },
-                                  child: BottmBtn(
+                                  child: CommonButton(
                                       isLoading: controller.isLoading.value,
                                       title: 'Submit',
                                       width: 400),

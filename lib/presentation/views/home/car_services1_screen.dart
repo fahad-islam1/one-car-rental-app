@@ -1,26 +1,37 @@
-import 'package:one_car_rental_app/presentation/views/home/saved_location_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:one_car_rental_app/presentation/viewmodel/home/car_service_view_model.dart';
+import 'package:one_car_rental_app/presentation/views/home/personal_chauffeur_location_screen.dart';
 
 class CarServices1Screen extends StatelessWidget {
-  const CarServices1Screen({super.key});
+  final CarServiceViewModel controller = Get.put(CarServiceViewModel());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          // Background Image
-          SizedBox.expand(
-            child: Image.asset(
-              'assets/images/map.png', // Replace with your image asset path
-              fit: BoxFit.cover,
+          GetBuilder<CarServiceViewModel>(
+            builder: (controller) => GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: LatLng(37.42796133580664, -122.085749655962),
+                zoom: 14.4746,
+              ),
+              mapType: MapType.normal,
+              myLocationEnabled: true,
+              myLocationButtonEnabled: false,
+              zoomControlsEnabled: true,
+              markers: Set<Marker>.from(controller.markers),
+              onMapCreated: (GoogleMapController controller) {
+                this.controller.initMapController(controller);
+                this.controller.getCurrentLocation();
+              },
             ),
           ),
-          // Top Left Back Button
           Positioned(
-            top: 40, // Adjust the top position as needed
-            left: 20, // Adjust the left position as needed
+            top: 40,
+            left: 20,
             child: GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
@@ -35,7 +46,7 @@ class CarServices1Screen extends StatelessWidget {
                       color: Colors.black.withOpacity(0.2),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset: const Offset(0, 3), // changes position of shadow
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -46,31 +57,34 @@ class CarServices1Screen extends StatelessWidget {
               ),
             ),
           ),
-          // Top Right GPS Icon
           Positioned(
-            top: 40, // Adjust the top position as needed
-            right: 20, // Adjust the right position as needed
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: const Icon(
-                Icons.gps_fixed,
-                color: Colors.black,
+            top: 40,
+            right: 20,
+            child: GestureDetector(
+              onTap: () {
+                controller.getCurrentLocation();
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  Icons.gps_fixed,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
-          // Bottom Container
           Positioned(
             bottom: 0,
             left: 0,
@@ -88,7 +102,7 @@ class CarServices1Screen extends StatelessWidget {
                     color: Colors.black.withOpacity(0.2),
                     spreadRadius: 2,
                     blurRadius: 5,
-                    offset: const Offset(0, -3), // changes position of shadow
+                    offset: const Offset(0, -3),
                   ),
                 ],
               ),
@@ -97,34 +111,33 @@ class CarServices1Screen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Where do you want to be One Car Rental'd ?",
+                    "Where do you want to be One Car Rental'd?",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
                   const SizedBox(height: 10),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: "Enter location",
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                    ),
-                  ),
+                  Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.4),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: ListTile(
+                        leading: const Icon(Icons.search),
+                        title: const Text("Enter Your Destination"),
+                        trailing: Text("skip"),
+                        onTap: () {
+                          Get.to(() => PersonalChauffeurLocationScreen(),
+                              transition: Transition.rightToLeft,
+                              duration: const Duration(milliseconds: 790));
+                        },
+                      )),
                   const SizedBox(height: 10),
                   ListTile(
                     leading: const Icon(Icons.home),
                     title: const Text("Take me home"),
-                    onTap: () {
-                      Get.to(() => const SavedCarLocation(),
-                          transition: Transition.rightToLeft,
-                          duration: const Duration(milliseconds: 790));
-                    },
-                  )
+                    onTap: () {},
+                  ),
                 ],
               ),
             ),

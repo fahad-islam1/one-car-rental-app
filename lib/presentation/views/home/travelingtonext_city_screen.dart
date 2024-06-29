@@ -7,7 +7,7 @@ class TravelingtonextCityScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottmBtn(
+      bottomNavigationBar: const CommonButton(
         title: 'Book Now',
         width: 300,
       ),
@@ -36,7 +36,8 @@ class TravelingtonextCityScreen extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         padding: const EdgeInsets.all(8),
-                        child: const Icon(Icons.arrow_back, color: Colors.black),
+                        child:
+                            const Icon(Icons.arrow_back, color: Colors.black),
                       ),
                     ),
                   ),
