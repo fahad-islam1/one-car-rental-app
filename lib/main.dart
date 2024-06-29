@@ -8,6 +8,7 @@ import 'package:one_car_rental_app/presentation/views/auth/login_screen.dart';
 import 'package:one_car_rental_app/presentation/views/chat/chat_screen.dart';
 import 'package:one_car_rental_app/presentation/views/home/bottom_nav.dart';
 import 'package:one_car_rental_app/presentation/viewmodel/profilemodel/profile_view_model.dart';
+import 'package:one_car_rental_app/presentation/views/ride/ride_details_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
                       profileController.firestoreService
                           .getUserDataStream(profileController.phonenumber);
                     }
-                    return  ChatScreen();
+                    return RideDetailScreen();
                   }
                 },
               );

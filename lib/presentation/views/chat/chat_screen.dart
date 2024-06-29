@@ -19,7 +19,7 @@ class ChatScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.3,
         centerTitle: true,
-        title: Text('Driver Chat'),
+        title: const Text('Driver Chat'),
       ),
       body: Column(
         children: [
@@ -35,8 +35,9 @@ class ChatScreen extends StatelessWidget {
                         ? Alignment.centerRight
                         : Alignment.centerLeft,
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      padding: EdgeInsets.all(10),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: message.isUserMessage
                             ? Colors.grey[300]
@@ -63,20 +64,20 @@ class ChatScreen extends StatelessWidget {
             }),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: _controller,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter Message',
                       border: InputBorder.none,
                     ),
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send),
+                  icon: const Icon(Icons.send),
                   onPressed: sendMessage,
                 ),
               ],
