@@ -1,13 +1,15 @@
 import 'package:get/get.dart';
 import 'package:one_car_rental_app/data/model/add_car_details_model.dart';
 import 'package:one_car_rental_app/data/services/firebase/addcars.db.dart';
-import 'package:one_car_rental_app/presentation/components/common/common_text.dart';
+import 'package:one_car_rental_app/presentation/components/cars/delete_car_alert.dart';
 import 'package:one_car_rental_app/presentation/views/cars/add_cars_screen.dart';
 import 'package:one_car_rental_app/res/colors/colors.dart';
 import 'package:flutter/material.dart';
 
 class YourCarScreen extends StatelessWidget {
-  const YourCarScreen({Key? key}) : super(key: key);
+  final bool canSelectCar;
+
+  const YourCarScreen({Key? key, required this.canSelectCar}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +18,9 @@ class YourCarScreen extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: InkWell(
         onTap: () {
-          Get.to(
-            () => AddCarsScreen(),
-            transition: Transition.leftToRight,
-            duration: const Duration(milliseconds: 700),
-          );
+          Get.to(() => AddCarsScreen(),
+              transition: Transition.leftToRight,
+              duration: const Duration(milliseconds: 700));
         },
         child: Container(
           margin: EdgeInsets.all(10),
@@ -31,19 +31,20 @@ class YourCarScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
           ),
           alignment: Alignment.center,
-          child: CustomText(
-              text: 'Add Car',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                color: white,
-                fontSize: 20,
-              )),
+          child: Text(
+            'Add Car',
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
         ),
       ),
       appBar: AppBar(
-        title: CustomText(
-          text: 'Your Cars',
-          style: Theme.of(context).textTheme.displaySmall,
+        title: Text(
+          'Your Cars',
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
       body: StreamBuilder<List<AddCarDetails>>(
@@ -87,11 +88,15 @@ class YourCarScreen extends StatelessWidget {
                 leading: CircleAvatar(
                   backgroundImage: NetworkImage(car.carImage),
                 ),
+                onTap: canSelectCar
+                    ? () {
+                        Navigator.pop(context, car);
+                      }
+                    : null,
                 trailing: IconButton(
-                  onPressed: () async {
-                    if (car.carId != null) {
-                      await addCarDetailsFirestore.deleteCar(car.carId!);
-                    }
+                  onPressed: () {
+                    showDeleteConfirmationDialog(
+                        context, car, addCarDetailsFirestore);
                   },
                   icon: Icon(
                     Icons.delete,

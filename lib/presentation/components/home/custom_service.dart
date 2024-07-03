@@ -56,7 +56,7 @@ class ChooseServiceWidget extends StatelessWidget {
                 SizedBox(height: screenHeight * 0.01),
                 Container(
                   height: screenHeight * 0.05,
-                  width: screenWidth * 0.4,
+                  width: screenWidth * 0.44,
                   padding: EdgeInsets.symmetric(
                     horizontal: screenWidth * 0.04,
                     vertical: screenHeight * 0.005,

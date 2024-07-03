@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:one_car_rental_app/presentation/viewmodel/home/searchlocation_viewmodel.dart';
-import 'package:one_car_rental_app/presentation/views/home/pick_map_location_screen.dart';
+import 'package:one_car_rental_app/presentation/views/home/choose_service_type_screen.dart';
 
 class PersonalChauffeurLocationScreen extends StatelessWidget {
   const PersonalChauffeurLocationScreen({Key? key}) : super(key: key);
@@ -70,7 +70,7 @@ class PersonalChauffeurLocationScreen extends StatelessWidget {
                           const SizedBox(height: 8),
                         ],
                       );
-                    }),
+                    }).toList(),
                   ],
                 ),
               ),
@@ -84,18 +84,35 @@ class PersonalChauffeurLocationScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.all(16),
-        height: 50,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: Colors.grey,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        width: MediaQuery.of(context).size.width * .9,
-        child: Text(
-          'Done',
-          style: TextStyle(color: Colors.white, fontSize: 20),
+      bottomNavigationBar: GestureDetector(
+        onTap: () {
+          if (controller.locationControllers.length >= 2) {
+            Get.to(
+                () => ChooseServiceTypeScreen(
+                      pickupAddress: controller.locationControllers[0].text,
+                      dropoffAddress: controller.locationControllers[1].text,
+                    ),
+                transition: Transition.rightToLeft,
+                duration: const Duration(milliseconds: 790));
+          } else {
+            // Show a snackbar or some message indicating the user needs to enter both locations
+            Get.snackbar(
+                'Error', 'Please enter both pickup and dropoff locations');
+          }
+        },
+        child: Container(
+          margin: EdgeInsets.all(16),
+          height: 50,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          width: MediaQuery.of(context).size.width * .9,
+          child: Text(
+            'Done',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
         ),
       ),
     );

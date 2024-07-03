@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
                       profileController.firestoreService
                           .getUserDataStream(profileController.phonenumber);
                     }
-                    return RideDetailScreen();
+                    return BottomNavHome();
                   }
                 },
               );

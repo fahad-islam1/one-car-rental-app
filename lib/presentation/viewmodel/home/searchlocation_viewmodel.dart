@@ -65,8 +65,7 @@ class SearchLocationViewModel extends GetxController {
     _suggestionsList[index].clear();
   }
 
-
-   Future<String> getAddressFromLatLng(LatLng latLng) async {
+  Future<String> getAddressFromLatLng(LatLng latLng) async {
     try {
       var response = await Geocoder2.getDataFromCoordinates(
         latitude: latLng.latitude,

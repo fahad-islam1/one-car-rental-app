@@ -33,7 +33,9 @@ class _BottomNavHomeState extends State<BottomNavHome> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    YourCarScreen(),
+    YourCarScreen(
+      canSelectCar: false,
+    ),
     ReferAndEarnScreen(),
     YourTrip(),
     ProfileScreen(),
