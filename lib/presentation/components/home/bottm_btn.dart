@@ -17,7 +17,7 @@ class CommonButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       height: 45,
       width: width,
       decoration: BoxDecoration(
@@ -29,7 +29,7 @@ class CommonButton extends StatelessWidget {
           ? const Center(child: CircularProgressIndicator(color: Colors.white))
           : CustomText(
               text: title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Colors.white,
                 fontSize: 20,

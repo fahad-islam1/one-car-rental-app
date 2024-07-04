@@ -180,3 +180,7 @@ String getColorName(Color color) {
   // Add more colors as needed
   return 'Unknown Color';
 }
+
+extension ColorExtension on Color {
+  String toHex() => '#${this.value.toRadixString(16).padLeft(8, '0').toUpperCase()}';
+}

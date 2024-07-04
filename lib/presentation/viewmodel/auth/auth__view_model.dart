@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,6 +22,9 @@ class AuthViewModel extends GetxController {
   final countryCode = '+971'.obs;
   final numberController = TextEditingController();
   final otp = List<String>.filled(6, '').obs;
+  int? resendToken;
+
+  var otpTimer = 60.obs;
 
   void clearOtp() {
     otp.clear();
@@ -36,7 +41,25 @@ class AuthViewModel extends GetxController {
           Message.showSuccess('Success', 'Verification completed successfully');
         },
         verificationFailed: (FirebaseAuthException e) {
-          Message.showError('Error', 'Verification failed: ${e.message}');
+          String errorMsg;
+          switch (e.code) {
+            case 'invalid-phone-number':
+              errorMsg = 'The phone number entered is invalid!';
+              break;
+            case 'quota-exceeded':
+              errorMsg = 'SMS quota exceeded. Please try again later!';
+              break;
+            case 'too-many-requests':
+              errorMsg = 'Too many requests. Please try again later!';
+              break;
+            case 'network-request-failed':
+              errorMsg =
+                  'Network error. Please check your internet connection!';
+              break;
+            default:
+              errorMsg = 'Verification failed: ${e.message}';
+          }
+          Message.showError('Error', errorMsg);
           print('Verification failed: ${e.message}');
         },
         codeSent: (String verificationId, int? resendToken) {
@@ -54,7 +77,6 @@ class AuthViewModel extends GetxController {
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           this.verificationId = verificationId;
-          // Message.showError('Error', 'Auto retrieval timeout');
           print('Auto retrieval timeout. Verification ID: $verificationId');
         },
       );
@@ -64,6 +86,58 @@ class AuthViewModel extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<void> resendOtp(String phoneNumber) async {
+    isLoading.value = true;
+    try {
+      await _auth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await _auth.signInWithCredential(credential);
+          Message.showSuccess('Success', 'Verification completed successfully');
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          Message.showError('Error', 'Verification failed: ${e.message}');
+          print('Verification failed: ${e.message}');
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          this.verificationId = verificationId;
+          this.resendToken = resendToken;
+
+          Get.to(
+            () => OtpVerificationScreen(
+              phonenumber: phoneNumber,
+            ),
+            transition: Transition.leftToRight,
+            duration: const Duration(milliseconds: 700),
+          );
+
+          print('OTP Sent. Verification ID: $verificationId');
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          this.verificationId = verificationId;
+          print('Auto retrieval timeout. Verification ID: $verificationId');
+        },
+        forceResendingToken: resendToken,
+      );
+    } catch (e) {
+      Message.showError('Error', 'Failed to resend OTP: $e');
+      print('Failed to resend OTP: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void startOtpTimer() {
+    otpTimer.value = 60; // 60 seconds timer
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (otpTimer.value == 0) {
+        timer.cancel();
+      } else {
+        otpTimer.value--;
+      }
+    });
   }
 
   Future<void> verifyOtp(String phoneNumber) async {
