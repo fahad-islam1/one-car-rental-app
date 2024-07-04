@@ -15,11 +15,11 @@ class BookingInformation extends StatelessWidget {
   final String? bookingTime;
 
   const BookingInformation({
-    Key? key,
+    super.key,
     required this.pickupAddress,
     required this.dropoffAddress,
     required this.bookingTime,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class BookingInformation extends StatelessWidget {
           Obx(() {
             return GoogleMap(
               mapType: MapType.normal,
-              initialCameraPosition: CameraPosition(
+              initialCameraPosition: const CameraPosition(
                 target: LatLng(31.5497, 74.3436),
                 tilt: 5,
                 zoom: 7,
@@ -54,7 +54,7 @@ class BookingInformation extends StatelessWidget {
             top: 20,
             right: 20,
             child: Container(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,18 +62,18 @@ class BookingInformation extends StatelessWidget {
                   if (pickupAddress != null)
                     Text(
                       'Pickup: $pickupAddress',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   if (dropoffAddress != null)
                     Text(
                       'Dropoff: $dropoffAddress',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   Obx(() {
                     if (chooseServiceController.distance > 0) {
                       return Text(
                         'Distance: ${chooseServiceController.distance.toStringAsFixed(2)} km',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       );
                     } else {
                       return Container();
@@ -210,16 +210,16 @@ class BookingInformation extends StatelessWidget {
                   ),
                   const Divider(),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -228,7 +228,7 @@ class BookingInformation extends StatelessWidget {
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 18)),
-                                  const Icon(CupertinoIcons.right_chevron),
+                                  Icon(CupertinoIcons.right_chevron),
                                 ],
                               ),
                               CustomText(
@@ -238,11 +238,11 @@ class BookingInformation extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -251,7 +251,7 @@ class BookingInformation extends StatelessWidget {
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 18)),
-                                  const Icon(CupertinoIcons.right_chevron),
+                                  Icon(CupertinoIcons.right_chevron),
                                 ],
                               ),
                               CustomText(

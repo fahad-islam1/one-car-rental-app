@@ -88,7 +88,7 @@ class LookingCarRent extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             width: double.infinity,
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -129,7 +129,7 @@ class LookingCarRent extends StatelessWidget {
 
                 Text(
                   "Owner's Comprehensive insurance: ${viewModel.selectedCar.value?.hasInsurance}",
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
                 SizedBox(
                   height: size.height * 0.01,
