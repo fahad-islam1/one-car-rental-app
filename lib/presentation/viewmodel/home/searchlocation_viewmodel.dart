@@ -21,8 +21,8 @@ class SearchLocationViewModel extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    addLocationField(); 
-    addLocationField(); 
+    addLocationField();
+    addLocationField();
   }
 
   void addLocationField() {
@@ -45,23 +45,40 @@ class SearchLocationViewModel extends GetxController {
       return;
     }
 
-    final String url =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=(cities)&key=$mapApiKey';
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        Message.showError('Network Error', 'No internet connection');
+        _suggestionsList[index].clear();
+        return;
+      }
 
-    final response = await http.get(Uri.parse(url));
+      final String url =
+          'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=(cities)&key=$mapApiKey';
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      if (data['status'] == 'OK') {
-        _suggestionsList[index].assignAll((data['predictions'] as List)
-            .map<String>((p) => p['description'])
-            .toList());
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['status'] == 'OK') {
+          _suggestionsList[index].assignAll((data['predictions'] as List)
+              .map<String>((p) => p['description'])
+              .toList());
+        } else {
+          _suggestionsList[index].clear();
+        }
       } else {
         _suggestionsList[index].clear();
+        throw Exception('Failed to load suggestions');
       }
-    } else {
+    } catch (e) {
+      if (e is SocketException) {
+        Message.showError('Network Error',
+            'Please check your internet connection and try again.');
+      } else {
+        Message.showError('Error', 'Failed to load suggestions: $e');
+      }
       _suggestionsList[index].clear();
-      throw Exception('Failed to load suggestions');
     }
   }
 
@@ -69,36 +86,36 @@ class SearchLocationViewModel extends GetxController {
     _suggestionsList[index].clear();
   }
 
+  Future<String> getAddressFromLatLng(LatLng latLng) async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        Message.showError('Network Error', 'No internet connection');
+        return 'No internet connection';
+      }
 
-Future<String> getAddressFromLatLng(LatLng latLng) async {
-  try {
-    var connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
-      Message.showError('Network Error', 'No internet connection');
-      return 'No internet connection';
-    }
+      var response = await Geocoder2.getDataFromCoordinates(
+        latitude: latLng.latitude,
+        longitude: latLng.longitude,
+        googleMapApiKey: mapApiKey,
+      );
 
-    var response = await Geocoder2.getDataFromCoordinates(
-      latitude: latLng.latitude,
-      longitude: latLng.longitude,
-      googleMapApiKey: mapApiKey,
-    );
-
-    if (response != null && response.address != null) {
-      Message.showSuccess('Success', 'Address fetched successfully');
-      return response.address!;
-    } else {
-      Message.showError('Error', 'Unknown address');
-      return 'Unknown address';
-    }
-  } catch (e) {
-    if (e is SocketException) {
-      Message.showError('Network Error', 'Please check your internet connection and try again.');
-      return 'Network error';
-    } else {
-      Message.showError('Error', 'Error fetching address: $e');
-      return 'Error fetching address';
+      if (response != null && response.address != null) {
+        Message.showSuccess('Success', 'Address fetched successfully');
+        return response.address;
+      } else {
+        Message.showError('Error', 'Unknown address');
+        return 'Unknown address';
+      }
+    } catch (e) {
+      if (e is SocketException) {
+        Message.showError('Network Error',
+            'Please check your internet connection and try again.');
+        return 'Network error';
+      } else {
+        Message.showError('Error', 'Error fetching address: $e');
+        return 'Error fetching address';
+      }
     }
   }
-}
 }
