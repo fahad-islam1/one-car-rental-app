@@ -4,11 +4,11 @@ import 'package:one_car_rental_app/res/colors/colors.dart';
 
 class CommonButton extends StatelessWidget {
   const CommonButton({
-    super.key,
+    Key? key,
     required this.title,
     required this.width,
     this.isLoading = false,
-  });
+  }) : super(key: key);
 
   final String title;
   final double width;
