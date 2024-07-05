@@ -249,7 +249,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:get/get.dart';
 import 'package:one_car_rental_app/presentation/components/home/choose_service_container.dart';
-import 'package:one_car_rental_app/presentation/components/home/custom_service.dart';
 import 'package:one_car_rental_app/presentation/viewmodel/home/choose_service_viewmodel.dart';
 
 class ChooseServiceTypeScreen extends StatelessWidget {
