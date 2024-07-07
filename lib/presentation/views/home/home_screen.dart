@@ -1,12 +1,10 @@
 import 'package:one_car_rental_app/presentation/components/home/bottm_btn.dart';
 import 'package:one_car_rental_app/presentation/components/home/custom_service.dart';
 import 'package:one_car_rental_app/presentation/components/home/home_slider.dart';
-import 'package:one_car_rental_app/presentation/viewmodel/profilemodel/profile_view_model.dart';
 import 'package:one_car_rental_app/presentation/views/home/car_delivery_service_screen.dart';
 import 'package:one_car_rental_app/presentation/views/home/car_services1_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:one_car_rental_app/presentation/components/common/common_text.dart';
-import 'package:one_car_rental_app/presentation/views/profile/profile_screen.dart';
 import 'package:one_car_rental_app/res/colors/colors.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +17,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: white.withOpacity(.92),
       appBar: AppBar(
         actions: [
-          Image(
+          const Image(
             image: AssetImage('assets/images/logo2.png'),
             width: 100,
             height: 80,
@@ -71,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                   Get.to(
                     () => CarServices1Screen(),
                     transition: Transition.rightToLeft,
-                    duration: Duration(milliseconds: 790),
+                    duration: const Duration(milliseconds: 790),
                   );
                 },
                 child: const ChooseServiceWidget(
@@ -85,9 +83,9 @@ class HomeScreen extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Get.to(
-                    () => CarDeliveryService(),
+                    () => const CarDeliveryService(),
                     transition: Transition.rightToLeft,
-                    duration: Duration(milliseconds: 790),
+                    duration: const Duration(milliseconds: 790),
                   );
                 },
                 child: const ChooseServiceWidget(
@@ -101,9 +99,9 @@ class HomeScreen extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Get.to(
-                    () => CarDeliveryService(),
+                    () => const CarDeliveryService(),
                     transition: Transition.rightToLeft,
-                    duration: Duration(milliseconds: 790),
+                    duration: const Duration(milliseconds: 790),
                   );
                 },
                 child: const ChooseServiceWidget(
@@ -114,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              CommonButton(
+              const CommonButton(
                 title: 'Car For Rent',
                 width: 130,
               ),
